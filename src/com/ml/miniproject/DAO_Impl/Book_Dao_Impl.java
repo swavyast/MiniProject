@@ -122,4 +122,22 @@ public class Book_Dao_Impl implements Book_Dao {
 				tx.rollback();
 		}
 	}
+
+	@Override
+	public void deleteAll() {
+		Transaction tx = null;
+		try {
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session session = sf.openSession();
+			tx = session.beginTransaction();
+			session.createNativeQuery("delete from books");
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			System.out.println("Exception occured while deleting book entries from the database");
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

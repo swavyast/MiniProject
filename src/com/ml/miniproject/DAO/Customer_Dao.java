@@ -1,5 +1,10 @@
 package com.ml.miniproject.DAO;
 
-public interface Customer_Dao {
+import java.util.List;
 
+import com.ml.miniproject.pojo.Customer;
+
+public interface Customer_Dao {
+	public Customer fetchCustomer(long cid);
+	public List<Customer> fetchAll();
 }

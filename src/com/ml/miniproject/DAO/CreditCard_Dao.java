@@ -10,4 +10,5 @@ public interface CreditCard_Dao {
 	public CreditCard fetchCreditCard(long cCardId);
 	public List<CreditCard> fetchAll();
 	public void deleteCreditCard(long cCardId);
+	public void deleteAll();
 }

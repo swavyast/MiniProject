@@ -10,4 +10,5 @@ public interface Book_Dao {
 	public Book fetchBook(long bookId);
 	public List<Book> fetchAll();
 	public void deleteBook(long bookId);
+	public void deleteAll();
 }
