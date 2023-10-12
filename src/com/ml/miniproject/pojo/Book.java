@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "books")
-public class Books {
+public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long bookId;
@@ -37,11 +37,11 @@ public class Books {
 	Set<Author> myAuthors;
 
 	@OneToMany(mappedBy = "myBook")
-	private Set<OrderItem> myOrders;
+	private Set<OrderItem> myOrderItems;
 
-	public Books() {
+	public Book() {
 	}
-	public Books(String bookName, double cost, int edition, float volume, int pubYear, String status,
+	public Book(String bookName, double cost, int edition, float volume, int pubYear, String status,
 			Set<Author> myAuthors, Set<OrderItem> myOrders) {
 		super();
 		this.bookName = bookName;
@@ -51,7 +51,7 @@ public class Books {
 		this.pubYear = pubYear;
 		this.status = status;
 		this.myAuthors = myAuthors;
-		this.myOrders = myOrders;
+		this.myOrderItems = myOrders;
 	}
 	public long getBookId() {
 		return bookId;
@@ -110,17 +110,17 @@ public class Books {
 	}
 
 	public Set<OrderItem> getMyOrders() {
-		return myOrders;
+		return myOrderItems;
 	}
 
 	public void setMyOrders(Set<OrderItem> myOrders) {
-		this.myOrders = myOrders;
+		this.myOrderItems = myOrders;
 	}
 
 	@Override
 	public String toString() {
 		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", cost=" + cost + ", edition=" + edition
-				+ ", volume=" + volume + ", pubYear=" + pubYear + ", myAuthors=" + myAuthors + ", myOrders=" + myOrders
+				+ ", volume=" + volume + ", pubYear=" + pubYear + ", myAuthors=" + myAuthors + ", myOrders=" + myOrderItems
 				+ "]";
 	}
 }

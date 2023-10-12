@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="silverCustomers")
-@PrimaryKeyJoinColumn(name = "myCid", referencedColumnName = "cid")
+@PrimaryKeyJoinColumn(name = "myCid")
 public class SilverCustomer extends Customer{
 	private String supportEmail;
 	private double shippingCharges;

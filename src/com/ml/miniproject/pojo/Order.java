@@ -15,10 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="orders")
-public abstract class Order {
-	public interface DAO<Order> {
-
-	}
+public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long orderId;
@@ -31,7 +28,7 @@ public abstract class Order {
 	@JoinColumn(name="myCid", referencedColumnName = "cid")
 	private Customer customer;
 	@OneToOne
-	@JoinColumn(name="myAdId")
+	@JoinColumn(name="myAdId", referencedColumnName = "adId")
 	private ShippingAddress myAddress;
 	@OneToMany(mappedBy = "order")
 	private Set<OrderItem> myOrderItems;
