@@ -3,13 +3,12 @@ package com.ml.miniproject.config;
 import java.util.Properties;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.service.ServiceRegistry;
-
 import com.ml.miniproject.pojo.Author;
-import com.ml.miniproject.pojo.Books;
+import com.ml.miniproject.pojo.Book;
 import com.ml.miniproject.pojo.CreditCard;
 import com.ml.miniproject.pojo.Customer;
 import com.ml.miniproject.pojo.GoldCustomer;
@@ -23,16 +22,6 @@ public class HibernateUtil {
 	static {
 		try {
 			Configuration cfg = new Configuration();
-			//Adding Annotated Classes
-			cfg.addAnnotatedClass(Author.class);
-			cfg.addAnnotatedClass(Customer.class);
-			cfg.addAnnotatedClass(Books.class);
-			cfg.addAnnotatedClass(OrderItem.class);
-			cfg.addAnnotatedClass(CreditCard.class);
-			cfg.addAnnotatedClass(Order.class);
-			cfg.addAnnotatedClass(GoldCustomer.class);
-			cfg.addAnnotatedClass(SilverCustomer.class);
-			cfg.addAnnotatedClass(ShippingAddress.class);
 			//Adding Configuration Properties
 			Properties prop = new Properties();
 			prop.put(Environment.DRIVER, "oracle.jdbc.driver.OracleDriver");
@@ -46,9 +35,19 @@ public class HibernateUtil {
 			prop.put(Environment.PASS, "68921794");
 			prop.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 			cfg.setProperties(prop);
+			//Adding Annotated Classes
+			cfg.addAnnotatedClass(Author.class);
+			cfg.addAnnotatedClass(Book.class);
+			cfg.addAnnotatedClass(Customer.class);
+			cfg.addAnnotatedClass(OrderItem.class);
+			cfg.addAnnotatedClass(CreditCard.class);
+			cfg.addAnnotatedClass(Order.class);
+			cfg.addAnnotatedClass(GoldCustomer.class);
+			cfg.addAnnotatedClass(SilverCustomer.class);
+			cfg.addAnnotatedClass(ShippingAddress.class);
 			StandardServiceRegistryBuilder ssrBuilder = new StandardServiceRegistryBuilder();
-			ServiceRegistry sr = ssrBuilder.applySettings(cfg.getProperties()).build();
-			sessionFactory = cfg.buildSessionFactory(sr);
+			StandardServiceRegistry ssr = ssrBuilder.applySettings(cfg.getProperties()).build();
+			sessionFactory = cfg.buildSessionFactory(ssr);
 		} catch (Exception e) {
 			System.out.println("Problem Occured at the time of Configuration, kindly check your concerned classes");
 			e.printStackTrace();

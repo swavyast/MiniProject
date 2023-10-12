@@ -24,40 +24,41 @@ public class Author {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(length = 20, unique = true, updatable = false, nullable = false)
 	private long authorId;
-	
+
 	@Column(length = 50, updatable = true, nullable = false)
 	private String authorName;
-	
+
 	@Column(length = 60, updatable = false, nullable = false)
 	private String email;
-	
+
 	@Column(length = 14, updatable = true, nullable = false)
 	private long phone;
-	
+
 	@ElementCollection
-	@CollectionTable(name = "mySkills", joinColumns = @JoinColumn(name="authorId"))
+	@CollectionTable(name = "mySkills", joinColumns = @JoinColumn(name = "authorId"))
 	@Column(nullable = false, unique = false, updatable = true)
 	private Set<String> skills;
-	
+
 	@ElementCollection
-	@CollectionTable(name="myQualifications", joinColumns = @JoinColumn(name="authorId"))
-	@OrderColumn(name="qOrder")
-	@Column(nullable = false, unique = false, updatable = true)
-	private List qualifications;
-	
+	@CollectionTable(name = "myQualifications", joinColumns = @JoinColumn(name = "authorId"))
+	@OrderColumn(name = "qOrder")
+	@Column(name = "qualis", nullable = false, unique = false, updatable = true)
+	private List<String> qualifications;
+
 	@ElementCollection
-	@CollectionTable(name = "myExperiences", joinColumns = @JoinColumn(name="authorId"))
-	@MapKeyColumn(name="companyName")
-	@Column(name="yoe",nullable = true, unique = false, updatable = true)
+	@CollectionTable(name = "myExperiences", joinColumns = @JoinColumn(name = "authorId"))
+	@MapKeyColumn(name = "companyName")
+	@Column(name = "yoe", nullable = true, unique = false, updatable = true)
 	private Map<String, Integer> myExp;
-	
+
 	@ManyToMany(mappedBy = "myAuthors")
-	private Set<Books> myBooks;
-	
-	public Author() {}
+	private Set<Book> myBooks;
+
+	public Author() {
+	}
 
 	public Author(String authorName, String email, long phone, Set<String> skills, List qualifications,
-			Map<String, Integer> myExp, Set<Books> myBooks) {
+			Map<String, Integer> myExp, Set<Book> myBooks) {
 		super();
 		this.authorName = authorName;
 		this.email = email;
@@ -124,11 +125,11 @@ public class Author {
 		this.myExp = myExp;
 	}
 
-	public Set<Books> getMyBooks() {
+	public Set<Book> getMyBooks() {
 		return myBooks;
 	}
 
-	public void setMyBooks(Set<Books> myBooks) {
+	public void setMyBooks(Set<Book> myBooks) {
 		this.myBooks = myBooks;
 	}
 
