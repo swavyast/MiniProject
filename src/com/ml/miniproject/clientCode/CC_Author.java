@@ -20,7 +20,7 @@ import com.ml.miniproject.pojo.OrderItem;
 import com.ml.miniproject.pojo.ShippingAddress;
 import com.ml.miniproject.pojo.SilverCustomer;
 
-public class SaveAuthor {
+public class CC_Author {
 
 	public static void main(String[] args) {
 		Author_Dao adao=new Author_Dao_Impl();

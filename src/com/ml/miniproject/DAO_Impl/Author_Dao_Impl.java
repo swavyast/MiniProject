@@ -18,7 +18,7 @@ import com.ml.miniproject.pojo.Book;
 public class Author_Dao_Impl implements Author_Dao {
 
 	@Override
-	public Author getAuthorById(long aid) {
+	public Author fetchAuthor(long aid) {
 
 		Transaction tx = null;
 		try {
@@ -153,5 +153,24 @@ public class Author_Dao_Impl implements Author_Dao {
 		}
 
 	}
+
+	@Override
+	public void deleteAll() {
+		Transaction tx = null;
+		try {
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session session = sf.openSession();
+			tx = session.beginTransaction();
+			session.createNativeQuery("delete from authors");
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			System.out.println("Exception occured while deleting author entries from the database");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 
 }
