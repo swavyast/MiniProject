@@ -21,7 +21,7 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			CreditCard cc = new CreditCard();
+			CreditCard cc = session.load(CreditCard.class, c.getcCardId());
 			cc.setCardType(c.getCardType());
 			cc.setcCardNumber(c.getcCardNumber());
 			cc.setCustomer(c.getCustomer());

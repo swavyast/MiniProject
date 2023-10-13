@@ -20,7 +20,7 @@ public class GoldCustomer_Dao_Impl implements GoldCustomer_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			GoldCustomer gold = new GoldCustomer();
+			GoldCustomer gold = session.load(GoldCustomer.class, gc.getCid());
 			gold.setCid(gc.getCid());
 			gold.setCname(gc.getCname());
 			gold.setEmail(gc.getEmail());

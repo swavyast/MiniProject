@@ -48,7 +48,7 @@ public class Order_Dao_Impl implements Order_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			Order o1=new Order();
+			Order o1= session.load(Order.class, o.getOrderId());
 			o1.setOrderId(o.getOrderId());
 			o1.setOrderDate(o.getOrderDate());
 			o1.setStatus(o.getStatus());

@@ -33,7 +33,8 @@ public class Book {
 	private String status;
 
 	@ManyToMany
-	@JoinTable(name = "books_and_authors", joinColumns = @JoinColumn(name = "myBookId", referencedColumnName = "bookId"), inverseJoinColumns = @JoinColumn(name = "myAuthorId", referencedColumnName = "authorId"))
+	@JoinTable(name = "books_and_authors", joinColumns = @JoinColumn(name = "myBookId", referencedColumnName = "bookId"), 
+	inverseJoinColumns = @JoinColumn(name = "myAuthorId", referencedColumnName = "authorId"))
 	Set<Author> myAuthors;
 
 	@OneToMany(mappedBy = "myBook")
@@ -41,6 +42,17 @@ public class Book {
 
 	public Book() {
 	}
+	
+	public Book(String bookName, double cost, int edition, float volume, int pubYear, String status) {
+		super();
+		this.bookName = bookName;
+		this.cost = cost;
+		this.edition = edition;
+		this.volume = volume;
+		this.pubYear = pubYear;
+		this.status = status;
+	}
+
 	public Book(String bookName, double cost, int edition, float volume, int pubYear, String status,
 			Set<Author> myAuthors, Set<OrderItem> myOrders) {
 		super();
@@ -99,6 +111,22 @@ public class Book {
 
 	public void setPubYear(int pubYear) {
 		this.pubYear = pubYear;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<OrderItem> getMyOrderItems() {
+		return myOrderItems;
+	}
+
+	public void setMyOrderItems(Set<OrderItem> myOrderItems) {
+		this.myOrderItems = myOrderItems;
 	}
 
 	public Set<Author> getMyAuthors() {
