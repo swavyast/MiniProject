@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import com.ml.miniproject.DAO.Book_Dao;
 import com.ml.miniproject.config.HibernateUtil;
+import com.ml.miniproject.pojo.Author;
 import com.ml.miniproject.pojo.Book;
 
 public class Book_Dao_Impl implements Book_Dao {
@@ -19,15 +20,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			Book b1 = new Book();
-			b1.setBookId(b.getBookId());
-			b1.setBookName(b.getBookName());
-			b1.setCost(b.getCost());
-			b1.setEdition(b.getEdition());
-			b1.setMyAuthors(b.getMyAuthors());
-			b1.setMyOrders(b.getMyOrders());
-			b1.setPubYear(b.getPubYear());
-			b1.setVolume(b.getVolume());
+			Book b1 = new Book(b.getBookName(), b.getCost(), b.getEdition(), b.getVolume(), b.getPubYear(), b.getStatus(), b.getMyAuthors(), b.getMyOrderItems());
 			session.save(b1);
 			tx.commit();
 			session.close();
@@ -46,7 +39,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			Book b1 = new Book();
+			Book b1 = session.load(Book.class, b.getBookId());
 			b1.setBookId(b.getBookId());
 			b1.setBookName(b.getBookName());
 			b1.setCost(b.getCost());

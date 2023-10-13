@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +22,7 @@ public class CreditCard {
 	private Date expDate;
 	private short cvv;
 	private String status;
-	@ManyToOne
+	@OneToOne
 	@JoinTable(name="cards_and_customers", joinColumns = @JoinColumn(name="myCardId", referencedColumnName = "cCardId"), 
 	inverseJoinColumns = @JoinColumn(name="myCid", referencedColumnName = "cid"))
 	private Customer customer;

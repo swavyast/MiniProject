@@ -10,6 +10,7 @@ import com.ml.miniproject.DAO_Impl.GoldCustomer_Dao_Impl;
 import com.ml.miniproject.DAO_Impl.OrderItem_Dao_Impl;
 import com.ml.miniproject.DAO_Impl.Order_Dao_Impl;
 import com.ml.miniproject.DAO_Impl.ShippingAddress_Dao_Impl;
+import com.ml.miniproject.DAO_Impl.SilverCustomer_Dao_Impl;
 import com.ml.miniproject.pojo.Author;
 import com.ml.miniproject.pojo.Book;
 import com.ml.miniproject.pojo.CreditCard;
@@ -18,6 +19,7 @@ import com.ml.miniproject.pojo.GoldCustomer;
 import com.ml.miniproject.pojo.Order;
 import com.ml.miniproject.pojo.OrderItem;
 import com.ml.miniproject.pojo.ShippingAddress;
+import com.ml.miniproject.pojo.SilverCustomer;
 
 public class DAO_Factory {
 
@@ -34,15 +36,15 @@ public class DAO_Factory {
 	public static void saveAuthor(Author a) {
 		author_Dao.saveAuthor(a);
 	}
-	
+
 	public static void updateAuthor(Author a) {
 		author_Dao.upateAuthor(a);
 	}
-	
+
 	public static void deleteAuthor(long aid) {
 		author_Dao.deleteAuthor(aid);
 	}
-	
+
 	public static void deleteAllAuthors() {
 		author_Dao.deleteAll();
 	}
@@ -69,18 +71,19 @@ public class DAO_Factory {
 	public static void saveBook(Book b) {
 		book_Dao.saveBook(b);
 	}
-	
+
 	public static void updateBook(Book b) {
 		book_Dao.updateBook(b);
 	}
-	
+
 	public static void deleteBook(long bookId) {
 		book_Dao.deleteBook(bookId);
 	}
-	
+
 	public static void deleteAllBooks() {
 		book_Dao.deleteAll();
 	}
+
 	public static Book fetchBook(long bookId) {
 		return book_Dao.fetchBook(bookId);
 	}
@@ -102,18 +105,19 @@ public class DAO_Factory {
 	public static void saveCreditCard(CreditCard c) {
 		creditCard_Dao.saveCreditCard(c);
 	}
-	
+
 	public static void updateCreditCard(CreditCard cc) {
 		creditCard_Dao.updateCreditCard(cc);
 	}
-	
+
 	public static void deleteCreditCard(long cCardId) {
 		creditCard_Dao.deleteCreditCard(cCardId);
 	}
-	
+
 	public static void deleteAllCreditCards() {
 		creditCard_Dao.deleteAll();
 	}
+
 	public static CreditCard fetchCreditCard(long cCardId) {
 		return creditCard_Dao.fetchCreditCard(cCardId);
 	}
@@ -139,8 +143,8 @@ public class DAO_Factory {
 	public static List<Customer> fetchCustomers() {
 		return customer_Dao.fetchAll();
 	}
-	
-	//Gold Customer DAO
+
+	// Gold Customer DAO
 	static GoldCustomer_Dao goldCustomer_Dao;
 	static {
 		goldCustomer_Dao = new GoldCustomer_Dao_Impl();
@@ -153,18 +157,19 @@ public class DAO_Factory {
 	public static void saveGoldCustomer(GoldCustomer gc) {
 		goldCustomer_Dao.saveGoldCustomer(gc);
 	}
-	
+
 	public static void updateGoldCustomer(GoldCustomer gc) {
 		goldCustomer_Dao.updateGoldCustomer(gc);
 	}
-	
+
 	public static void deleteGoldCustomer(long cid) {
 		goldCustomer_Dao.deleteGoldCustomer(cid);
 	}
-	
+
 	public static void deleteAllGolCustomers() {
 		goldCustomer_Dao.deleteAll();
 	}
+
 	public static GoldCustomer fetchGoldCustomers(long cid) {
 		return goldCustomer_Dao.fetchGoldCustomer(cid);
 	}
@@ -172,9 +177,9 @@ public class DAO_Factory {
 	public static List<GoldCustomer> fetchAllGoldCustomers() {
 		return goldCustomer_Dao.fetchAll();
 	}
-	
-	//Order DAO
-	
+
+	// Order DAO
+
 	static Order_Dao order_Dao;
 	static {
 		order_Dao = new Order_Dao_Impl();
@@ -187,18 +192,19 @@ public class DAO_Factory {
 	public static void saveOrder(Order o) {
 		order_Dao.saveOrder(o);
 	}
-	
+
 	public static void updateGoldCustomer(Order o) {
 		order_Dao.upateOrder(o);
 	}
-	
+
 	public static void deleteOrder(long oid) {
 		order_Dao.deleteOrder(oid);
 	}
-	
+
 	public static void deleteAllOrders() {
 		order_Dao.deleteAll();
 	}
+
 	public static Order fetchOrder(long oid) {
 		return order_Dao.fetchOrder(oid);
 	}
@@ -206,8 +212,8 @@ public class DAO_Factory {
 	public static List<Order> fetchAllOrders() {
 		return order_Dao.fetchAll();
 	}
-	
-	//OrderItem DAO
+
+	// OrderItem DAO
 	static OrderItem_Dao orderItem_Dao;
 	static {
 		orderItem_Dao = new OrderItem_Dao_Impl();
@@ -220,18 +226,19 @@ public class DAO_Factory {
 	public static void saveOrderItem(OrderItem oi) {
 		orderItem_Dao.saveOrderItem(oi);
 	}
-	
+
 	public static void updateOrderItem(OrderItem oi) {
 		orderItem_Dao.updateOrderItem(oi);
 	}
-	
+
 	public static void deleteOrderItem(long itemId) {
 		orderItem_Dao.deleteOrderItem(itemId);
 	}
-	
+
 	public static void deleteAllOrderItems() {
 		orderItem_Dao.deleteAll();
 	}
+
 	public static OrderItem fetchOrderItem(long itemId) {
 		return orderItem_Dao.fetchOrderItem(itemId);
 	}
@@ -239,8 +246,8 @@ public class DAO_Factory {
 	public static List<OrderItem> fetchAllOrderItems() {
 		return orderItem_Dao.fetchAll();
 	}
-	
-	//ShippingAddress DAO
+
+	// ShippingAddress DAO
 	static ShippingAddress_Dao shippingAddress_Dao;
 	static {
 		shippingAddress_Dao = new ShippingAddress_Dao_Impl();
@@ -253,23 +260,58 @@ public class DAO_Factory {
 	public static void saveShippingAddress(ShippingAddress sa) {
 		shippingAddress_Dao.saveShippingAddress(sa);
 	}
-	
+
 	public static void updateShippingAddress(ShippingAddress sa) {
 		shippingAddress_Dao.updateShippingAddress(sa);
 	}
-	
+
 	public static void deleteShippingAddress(long adId) {
 		shippingAddress_Dao.deleteShippingAddress(adId);
 	}
-	
+
 	public static void deleteAllShippingAddresses() {
 		shippingAddress_Dao.deleteAll();
 	}
+
 	public static ShippingAddress fetchShippingAddress(long adId) {
 		return shippingAddress_Dao.fetchShippingAddress(adId);
 	}
 
 	public static List<ShippingAddress> fetchAllShippingAddresses() {
 		return shippingAddress_Dao.fetchAll();
+	}
+
+	// Silver Customer DAO
+	static SilverCustomer_Dao silverCustomer_Dao;
+	static {
+		silverCustomer_Dao = new SilverCustomer_Dao_Impl();
+	}
+
+	public static SilverCustomer_Dao getSilverCustomer_Dao() {
+		return silverCustomer_Dao;
+	}
+
+	public static void saveSilverCustomer(SilverCustomer sc) {
+		silverCustomer_Dao.saveSilverCustomer(sc);
+	}
+
+	public static void updateSilverCustomer(SilverCustomer sc) {
+		silverCustomer_Dao.updateSilverCustomer(sc);
+	}
+
+	public static void deleteSilverCustomer(long cid) {
+		silverCustomer_Dao.deleteSilverCustomer(cid);
+	}
+
+	public static void deleteAllSilverCustomers() {
+		silverCustomer_Dao.deleteAll();
+	}
+
+	public static SilverCustomer fetchSilverCustomer(long cid) {
+		return silverCustomer_Dao.fetchSilverCustomer(cid);
+	}
+
+	public static List<SilverCustomer> fetchAllSilverCustomers() {
+		return silverCustomer_Dao.fetchAll();
 	}
 }
