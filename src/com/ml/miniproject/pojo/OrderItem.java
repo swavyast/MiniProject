@@ -17,80 +17,87 @@ import org.hibernate.annotations.Formula;
 public class OrderItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "itemId")
+	@Column(name = "oiId")
 	private long itemId;
-	@Formula("itemCost=cost")
-	@Column(nullable = true)
+	//@Formula("itemCost=cost")
+	@Column(name = "oiCost")
 	private double itemCost;
-	@Column(nullable = true)
+	@Column(name = "oiCount")
 	private short itemCount;
-	@Column(nullable = true)
-	private double shippingCost;
-	@Formula("itemCost*itemCount+shippingCost")
-	@Column(nullable = true)
-	private double totalCost;
+	@Column(name = "oiStatus")
+	private String status;
 	@ManyToOne
-	@JoinColumns(value = @JoinColumn(name = "myBooks", referencedColumnName = "bookId"))
+	@JoinColumn(name = "myBookId", referencedColumnName = "bookId")
 	private Book myBook;
 	@ManyToOne
-	@JoinColumn(name="myOid", referencedColumnName = "orderId")
+	@JoinColumn(name="myOrderId", referencedColumnName = "orderId")
 	private Order order;
 	public OrderItem() {}
-	public OrderItem(Book myBook, double itemCost, short itemCount, double shippingCost, double totalCost,
-			Order order) {
-		super();
-		this.myBook = myBook;
+
+	public OrderItem(double itemCost, short itemCount, String status) {
 		this.itemCost = itemCost;
 		this.itemCount = itemCount;
-		this.shippingCost = shippingCost;
-		this.totalCost = totalCost;
-		this.order = order;
+		this.status = status;
 	}
+
+	public OrderItem(double itemCost, short itemCount, String status, Book myBook) {
+		this.itemCost = itemCost;
+		this.itemCount = itemCount;
+		this.status = status;
+		this.myBook = myBook;
+	}
+
 	public long getItemId() {
 		return itemId;
 	}
+
 	public void setItemId(long itemId) {
 		this.itemId = itemId;
 	}
-	public Book getMyBook() {
-		return myBook;
-	}
-	public void setMyBook(Book myBook) {
-		this.myBook = myBook;
-	}
+
 	public double getItemCost() {
 		return itemCost;
 	}
+
 	public void setItemCost(double itemCost) {
 		this.itemCost = itemCost;
 	}
+
 	public short getItemCount() {
 		return itemCount;
 	}
+
 	public void setItemCount(short itemCount) {
 		this.itemCount = itemCount;
 	}
-	public double getShippingCost() {
-		return shippingCost;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setShippingCost(double shippingCost) {
-		this.shippingCost = shippingCost;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public double getTotalCost() {
-		return totalCost;
+
+	public Book getMyBook() {
+		return myBook;
 	}
-	public void setTotalCost(double totalCost) {
-		this.totalCost = totalCost;
+
+	public void setMyBook(Book myBook) {
+		this.myBook = myBook;
 	}
+
 	public Order getOrder() {
 		return order;
 	}
+
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
 	@Override
 	public String toString() {
-		return "OrderItem [itemId=" + itemId + ", myBook=" + myBook + ", itemCost=" + itemCost + ", itemCount="
-				+ itemCount + ", shippingCost=" + shippingCost + ", totalCost=" + totalCost + ", order=" + order + "]";
+		return "OrderItem [itemId=" + itemId + ", itemCost=" + itemCost + ", itemCount=" + itemCount + ", status="
+				+ status + ", myBook=" + myBook + ", order=" + order + "]";
 	}
 }

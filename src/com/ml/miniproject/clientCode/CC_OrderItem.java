@@ -15,8 +15,7 @@ public class CC_OrderItem {
 		oitem.setItemCount((short)1);
 		oitem.setMyBook(new Book());
 		oitem.setOrder(new Order());
-		oitem.setShippingCost(0);
-		oitem.setTotalCost(0);
+		oitem.setStatus(null);
 		oidao.saveOrderItem(oitem);
 	}
 

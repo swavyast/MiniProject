@@ -18,12 +18,16 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long cid;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cId")
+	private long cId;
+	@Column(name = "cName")
 	private String cname;
+	@Column(name = "cEmail")
 	private String email;
+	@Column(name = "cPhone")
 	private long phone;
-	@Column(name="dateOfBirth")
+	@Column(name="cDOB")
 	private Date dob;
 	@OneToMany(mappedBy = "customer")
 	private Set<CreditCard> myCards;
@@ -31,6 +35,13 @@ public abstract class Customer {
 	private Set<Order> myOrders;
 	
 	public Customer() {}
+
+	public Customer(String cname, String email, long phone, Date dob) {
+		this.cname = cname;
+		this.email = email;
+		this.phone = phone;
+		this.dob = dob;
+	}
 
 	public Customer(String cname, String email, long phone, Date dob, Set<CreditCard> myCards, Set<Order> myOrders) {
 		super();
@@ -43,11 +54,11 @@ public abstract class Customer {
 	}
 
 	public long getCid() {
-		return cid;
+		return cId;
 	}
 
-	public void setCid(long cid) {
-		this.cid = cid;
+	public void setCid(long cId) {
+		this.cId = cId;
 	}
 
 	public String getCname() {
@@ -100,7 +111,7 @@ public abstract class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [cid=" + cid + ", cname=" + cname + ", email=" + email + ", phone=" + phone + ", dob=" + dob
+		return "Customer [cid=" + cId + ", cname=" + cname + ", email=" + email + ", phone=" + phone + ", dob=" + dob
 				+ ", myCards=" + myCards + ", myOrders=" + myOrders + "]";
 	}
 }

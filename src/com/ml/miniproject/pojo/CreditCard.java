@@ -2,31 +2,45 @@ package com.ml.miniproject.pojo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="cCards")
 public class CreditCard {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cCardId")
 	private long cCardId;
+	@Column(name = "cCardNumber")
 	private long cCardNumber;
+	@Column(name = "cCardType")
 	private String cardType;
+	@Column(name = "ExpDate")
 	private Date expDate;
+	@Column(name = "Cvv")
 	private short cvv;
+	@Column(name = "cCardStatus")
 	private String status;
-	@OneToOne
-	@JoinTable(name="cards_and_customers", joinColumns = @JoinColumn(name="myCardId", referencedColumnName = "cCardId"), 
-	inverseJoinColumns = @JoinColumn(name="myCid", referencedColumnName = "cid"))
+	@ManyToOne
+	@JoinColumn(name="myCid", referencedColumnName = "cId")
 	private Customer customer;
 	public CreditCard() {}
+	
+	public CreditCard(long cCardNumber, String cardType, Date expDate, short cvv, String status) {
+		this.cCardNumber = cCardNumber;
+		this.cardType = cardType;
+		this.expDate = expDate;
+		this.cvv = cvv;
+		this.status = status;
+	}
+
 	public CreditCard(long cCardNumber, String cardType, Date expDate, short cvv, String status, Customer customer) {
 		super();
 		this.cCardNumber = cCardNumber;

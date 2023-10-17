@@ -21,34 +21,30 @@ import javax.persistence.Table;
 @Table(name = "authors")
 public class Author {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length = 30, unique = true, updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="authorId")
 	private long authorId;
-
-	@Column(length = 50, updatable = true, nullable = false)
+	@Column(name="authorName")
 	private String authorName;
-
-	@Column(length = 60, updatable = false, nullable = false)
+	@Column(name="authorEmail")
 	private String email;
-
-	@Column(length = 14, updatable = true, nullable = false)
+	@Column(name="authorPhone")
 	private long phone;
 
 	@ElementCollection
-	@CollectionTable(name = "mySkills", joinColumns = @JoinColumn(name = "authorId"))
-	@Column(nullable = false, unique = false, updatable = true)
+	@CollectionTable(name = "authorSkills", joinColumns = @JoinColumn(name = "authorId"))
 	private Set<String> skills;
 
 	@ElementCollection
-	@CollectionTable(name = "myQualifications", joinColumns = @JoinColumn(name = "authorId"))
+	@CollectionTable(name = "authorQual", joinColumns = @JoinColumn(name = "authorId"))
 	@OrderColumn(name = "qOrder")
-	@Column(name = "qualis", nullable = false, unique = false, updatable = true)
+	@Column(name = "qualis")
 	private List<String> qualifications;
 
 	@ElementCollection
-	@CollectionTable(name = "myExperiences", joinColumns = @JoinColumn(name = "authorId"))
+	@CollectionTable(name = "authorExp", joinColumns = @JoinColumn(name = "authorId"))
 	@MapKeyColumn(name = "companyName")
-	@Column(name = "yoe", nullable = true, unique = false, updatable = true)
+	@Column(name = "yoe")
 	private Map<String, Integer> myExp;
 
 	@ManyToMany(mappedBy = "myAuthors")
@@ -57,7 +53,17 @@ public class Author {
 	public Author() {
 	}
 
-	public Author(String authorName, String email, long phone, Set<String> skills, List qualifications,
+	public Author(String authorName, String email, long phone, Set<String> skills, List<String> qualifications,
+			Map<String, Integer> myExp) {
+		this.authorName = authorName;
+		this.email = email;
+		this.phone = phone;
+		this.skills = skills;
+		this.qualifications = qualifications;
+		this.myExp = myExp;
+	}
+
+	public Author(String authorName, String email, long phone, Set<String> skills, List<String> qualifications,
 			Map<String, Integer> myExp, Set<Book> myBooks) {
 		super();
 		this.authorName = authorName;
@@ -109,11 +115,11 @@ public class Author {
 		this.skills = skills;
 	}
 
-	public List getQualifications() {
+	public List<String> getQualifications() {
 		return qualifications;
 	}
 
-	public void setQualifications(List qualifications) {
+	public void setQualifications(List<String> qualifications) {
 		this.qualifications = qualifications;
 	}
 
