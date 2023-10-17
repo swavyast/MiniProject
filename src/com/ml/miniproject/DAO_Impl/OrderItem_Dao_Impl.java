@@ -26,8 +26,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			item.setOrder(oi.getOrder());
 			item.setItemCount(oi.getItemCount());
 			item.setItemCost(oi.getItemCost());
-			item.setShippingCost(oi.getShippingCost());
-			item.setTotalCost(oi.getTotalCost());
+			item.setStatus(oi.getStatus());
 			session.save(item);
 			tx.commit();
 			session.close();
@@ -53,8 +52,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			item.setOrder(oi.getOrder());
 			item.setItemCount(oi.getItemCount());
 			item.setItemCost(oi.getItemCost());
-			item.setShippingCost(oi.getShippingCost());
-			item.setTotalCost(oi.getTotalCost());
+			item.setStatus(oi.getStatus());
 			session.update(item);
 			tx.commit();
 			session.close();
@@ -117,8 +115,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			item.getOrder();
 			item.getItemCount();
 			item.getItemCost();
-			item.getShippingCost();
-			item.getTotalCost();
+			item.getStatus();
 			tx.commit();
 			session.close();
 			return item;

@@ -3,6 +3,7 @@ package com.ml.miniproject.pojo;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,21 @@ import javax.persistence.Table;
 @Table(name="orders")
 public class Order {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "orderId")
 	private long orderId;
+	@Column(name = "orderDate")
 	private Date orderDate;
+	@Column(name = "orderQuantity")
 	private int orderQuantity;
+	@Column(name = "orderCost")
 	private double orderCost;
+	@Column(name = "deliverDate")
 	private Date deliveryDate;
+	@Column(name = "orderStatus")
 	private String status;
 	@ManyToOne
-	@JoinColumn(name="myCid", referencedColumnName = "cid")
+	@JoinColumn(name="myCid")
 	private Customer customer;
 	@OneToOne
 	@JoinColumn(name="myAdId", referencedColumnName = "adId")
@@ -33,6 +40,15 @@ public class Order {
 	@OneToMany(mappedBy = "order")
 	private Set<OrderItem> myOrderItems;
 	public Order() {}
+	
+	public Order(Date orderDate, int orderQuantity, double orderCost, Date deliveryDate, String status) {
+		this.orderDate = orderDate;
+		this.orderQuantity = orderQuantity;
+		this.orderCost = orderCost;
+		this.deliveryDate = deliveryDate;
+		this.status = status;
+	}
+
 	public Order(Date orderDate, int orderQuantity, double orderCost, Date deliveryDate, String status,
 			Customer customer, ShippingAddress myAddress, Set<OrderItem> myOrderItems) {
 		super();

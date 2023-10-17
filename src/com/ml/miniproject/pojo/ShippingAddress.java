@@ -13,22 +13,33 @@ import javax.persistence.Table;
 public class ShippingAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="adId")
 	private long adId;
-	@Column(length = 10)
+	@Column(name="adStreet")
 	private String street;
-	@Column(length = 40)
+	@Column(name="adLocality")
 	private String locality;
-	@Column(length = 40)
+	@Column(name="adCity")
 	private String city;
-	@Column(length = 40)
+	@Column(name="adState")
 	private String state;
-	@Column(length = 40)
+	@Column(name="adCountry")
 	private String country;
-	@Column(length = 6)
+	@Column(name="adPincode")
 	private int pincode;
 	@OneToOne(mappedBy = "myAddress")
 	private Order order;
 	public ShippingAddress() {}
+	
+	public ShippingAddress(String street, String locality, String city, String state, String country, int pincode) {
+		this.street = street;
+		this.locality = locality;
+		this.city = city;
+		this.state = state;
+		this.country = country;
+		this.pincode = pincode;
+	}
+
 	public ShippingAddress(String street, String locality, String city, String state, String country, int pincode,
 			Order order) {
 		super();

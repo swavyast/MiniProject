@@ -17,7 +17,8 @@ import javax.persistence.Table;
 @Table(name = "books")
 public class Book {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "bookId")
 	private long bookId;
 	@Column(name = "bName")
 	private String bookName;
@@ -29,7 +30,7 @@ public class Book {
 	private float volume;
 	@Column(name = "bPubYear")
 	private int pubYear;
-	@Column(updatable = true, length = 50)
+	@Column(name = "bStatus")
 	private String status;
 
 	@ManyToMany

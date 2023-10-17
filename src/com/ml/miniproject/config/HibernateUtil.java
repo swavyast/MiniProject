@@ -35,16 +35,19 @@ public class HibernateUtil {
 			prop.put(Environment.PASS, "68921794");
 			prop.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 			cfg.setProperties(prop);
+			
 			//Adding Annotated Classes
-			cfg.addAnnotatedClass(Author.class);
-			cfg.addAnnotatedClass(Book.class);
+			
 			cfg.addAnnotatedClass(Customer.class);
-			cfg.addAnnotatedClass(OrderItem.class);
+			cfg.addAnnotatedClass(SilverCustomer.class);
+			cfg.addAnnotatedClass(GoldCustomer.class);
+			cfg.addAnnotatedClass(ShippingAddress.class);
 			cfg.addAnnotatedClass(CreditCard.class);
 			cfg.addAnnotatedClass(Order.class);
-			cfg.addAnnotatedClass(GoldCustomer.class);
-			cfg.addAnnotatedClass(SilverCustomer.class);
-			cfg.addAnnotatedClass(ShippingAddress.class);
+			cfg.addAnnotatedClass(OrderItem.class);
+			cfg.addAnnotatedClass(Book.class);
+			cfg.addAnnotatedClass(Author.class);
+			
 			StandardServiceRegistryBuilder ssrBuilder = new StandardServiceRegistryBuilder();
 			StandardServiceRegistry ssr = ssrBuilder.applySettings(cfg.getProperties()).build();
 			sessionFactory = cfg.buildSessionFactory(ssr);
