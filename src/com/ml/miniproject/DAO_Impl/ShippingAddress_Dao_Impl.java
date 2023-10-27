@@ -20,15 +20,7 @@ public class ShippingAddress_Dao_Impl implements ShippingAddress_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			ShippingAddress address = new ShippingAddress();
-			address.setAdId(sa.getAdId());
-			address.setOrder(sa.getOrder());
-			address.setStreet(sa.getStreet());
-			address.setLocality(sa.getLocality());
-			address.setCity(sa.getCity());
-			address.setState(sa.getState());
-			address.setCountry(sa.getCountry());
-			address.setPincode(sa.getPincode());
+			ShippingAddress address = new ShippingAddress(sa.getStreet(), sa.getLocality(), sa.getCity(), sa.getState(), sa.getCountry(), sa.getPincode());
 			session.save(address);
 			tx.commit();
 			session.close();
@@ -48,15 +40,7 @@ public class ShippingAddress_Dao_Impl implements ShippingAddress_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			ShippingAddress address = session.load(ShippingAddress.class, sa.getAdId());
-			address.setAdId(sa.getAdId());
-			address.setOrder(sa.getOrder());
-			address.setStreet(sa.getStreet());
-			address.setLocality(sa.getLocality());
-			address.setCity(sa.getCity());
-			address.setState(sa.getState());
-			address.setCountry(sa.getCountry());
-			address.setPincode(sa.getPincode());
+			ShippingAddress address = new ShippingAddress(sa.getStreet(), sa.getLocality(), sa.getCity(), sa.getState(), sa.getCountry(), sa.getPincode(), sa.getOrder());
 			session.update(address);
 			tx.commit();
 			session.close();
@@ -96,7 +80,7 @@ public class ShippingAddress_Dao_Impl implements ShippingAddress_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			session.createNativeQuery("delete from shippingAddress");
+			session.createQuery("delete from shippingAddress", ShippingAddress.class).executeUpdate();
 			tx.commit();
 			session.close();
 		} catch (Exception e) {
@@ -114,14 +98,6 @@ public class ShippingAddress_Dao_Impl implements ShippingAddress_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			ShippingAddress address=session.load(ShippingAddress.class, adId);
-			address.getAdId();
-			address.getOrder();
-			address.getStreet();
-			address.getLocality();
-			address.getCity();
-			address.getState();
-			address.getCountry();
-			address.getPincode();
 			tx.commit();
 			session.close();
 			return address;
@@ -140,7 +116,7 @@ public class ShippingAddress_Dao_Impl implements ShippingAddress_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<ShippingAddress> list=new ArrayList<ShippingAddress>();
-			list=(List<ShippingAddress>)session.createNativeQuery("select * from shippingAddress").getResultList();
+			list=(List<ShippingAddress>)session.createQuery("select * from shippingAddress", ShippingAddress.class).list();
 			tx.commit();
 			session.close();
 			return list;

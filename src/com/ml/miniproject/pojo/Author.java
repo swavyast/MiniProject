@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,23 +33,23 @@ public class Author {
 	@Column(name="authorPhone")
 	private long phone;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "authorSkills", joinColumns = @JoinColumn(name = "authorId"))
 	private Set<String> skills;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "authorQual", joinColumns = @JoinColumn(name = "authorId"))
 	@OrderColumn(name = "qOrder")
 	@Column(name = "qualis")
 	private List<String> qualifications;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "authorExp", joinColumns = @JoinColumn(name = "authorId"))
 	@MapKeyColumn(name = "companyName")
 	@Column(name = "yoe")
 	private Map<String, Integer> myExp;
 
-	@ManyToMany(mappedBy = "myAuthors")
+	@ManyToMany(mappedBy = "myAuthors", fetch = FetchType.EAGER)
 	private Set<Book> myBooks;
 
 	public Author() {
