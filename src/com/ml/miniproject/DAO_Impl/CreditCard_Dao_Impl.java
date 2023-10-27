@@ -21,13 +21,7 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			CreditCard cc = session.load(CreditCard.class, c.getcCardId());
-			cc.setCardType(c.getCardType());
-			cc.setcCardNumber(c.getcCardNumber());
-			cc.setCustomer(c.getCustomer());
-			cc.setCvv(c.getCvv());
-			cc.setExpDate(c.getExpDate());
-			cc.setStatus(c.getStatus());
+			CreditCard cc = new CreditCard(c.getcCardNumber(), c.getCardType(), c.getExpDate(), c.getCvv(), c.getStatus());
 			session.save(cc);
 			tx.commit();
 			session.close();
@@ -44,13 +38,7 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			CreditCard cc = new CreditCard();
-			cc.setCardType(c.getCardType());
-			cc.setcCardNumber(c.getcCardNumber());
-			cc.setCustomer(c.getCustomer());
-			cc.setCvv(c.getCvv());
-			cc.setExpDate(c.getExpDate());
-			cc.setStatus(c.getStatus());
+			CreditCard cc = new CreditCard(c.getcCardNumber(), c.getCardType(), c.getExpDate(), c.getCvv(), c.getStatus(), c.getCustomer());
 			session.update(cc);
 			tx.commit();
 			session.close();
@@ -69,13 +57,6 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			CreditCard cc = session.load(CreditCard.class, cCardId);
-			cc.getCardType();
-			cc.getcCardId();
-			cc.getcCardNumber();
-			cc.getCustomer();
-			cc.getCvv();
-			cc.getExpDate();
-			cc.getStatus();
 			tx.commit();
 			session.close();
 			return cc;
@@ -94,7 +75,7 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<CreditCard> list = new ArrayList<CreditCard>();
-			list = (List<CreditCard>) session.createNativeQuery("select * from cCards").getResultList();
+			list = (List<CreditCard>) session.createQuery("select * from cCards", CreditCard.class).list();
 			tx.commit();
 			session.close();
 			return list;
@@ -129,7 +110,7 @@ public class CreditCard_Dao_Impl implements CreditCard_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			session.createNativeQuery("delete from cCards");
+			session.createQuery("delete from cCards", CreditCard.class).executeUpdate();
 			tx.commit();
 			session.close();
 		} catch (Exception e) {

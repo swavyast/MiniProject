@@ -39,7 +39,7 @@ public class Customer_Dao_Impl implements Customer_Dao{
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<Customer> list = new ArrayList<Customer>();
-			list = (List<Customer>) session.createNativeQuery("select * from myCstmrs").getResultList();
+			list = (List<Customer>) session.createNativeQuery("select * from myCstmrs", Customer.class).list();
 			tx.commit();
 			session.close();
 			return list;

@@ -1,6 +1,7 @@
 package com.ml.miniproject.DAO_Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -20,18 +21,8 @@ public class SilverCustomer_Dao_Impl implements SilverCustomer_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			SilverCustomer customer = new SilverCustomer();
-			customer.setCid(sc.getCid());
-			customer.setCname(sc.getCname());
-			customer.setEmail(sc.getEmail());
-			customer.setDob(sc.getDob());
-			customer.setPhone(sc.getPhone());
-			customer.setSupportEmail(sc.getSupportEmail());
-			customer.setMyCards(sc.getMyCards());
-			customer.setMyOrders(sc.getMyOrders());
-			customer.setHandlingCharges(sc.getHandlingCharges());
-			customer.setShippingCharges(sc.getShippingCharges());
-			customer.setDiscounts(sc.getDiscounts());
+			SilverCustomer customer = new SilverCustomer(sc.getSupportEmail(), sc.getShippingCharges(), 
+				sc.getDiscounts(), sc.getHandlingCharges());
 			session.save(customer);
 			tx.commit();
 			session.close();
@@ -51,18 +42,9 @@ public class SilverCustomer_Dao_Impl implements SilverCustomer_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			SilverCustomer customer = session.load(SilverCustomer.class, sc.getCid());
-			customer.setCid(sc.getCid());
-			customer.setCname(sc.getCname());
-			customer.setEmail(sc.getEmail());
-			customer.setDob(sc.getDob());
-			customer.setPhone(sc.getPhone());
-			customer.setSupportEmail(sc.getSupportEmail());
-			customer.setMyCards(sc.getMyCards());
-			customer.setMyOrders(sc.getMyOrders());
-			customer.setHandlingCharges(sc.getHandlingCharges());
-			customer.setShippingCharges(sc.getShippingCharges());
-			customer.setDiscounts(sc.getDiscounts());
+			SilverCustomer customer = new SilverCustomer(sc.getCname(), sc.getEmail(), sc.getPhone(), 
+				sc.getDob(), sc.getSupportEmail(), sc.getShippingCharges(), sc.getDiscounts(), 
+				sc.getHandlingCharges());
 			session.update(customer);
 			tx.commit();
 			session.close();
@@ -101,7 +83,8 @@ public class SilverCustomer_Dao_Impl implements SilverCustomer_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<SilverCustomer> list=new ArrayList<SilverCustomer>();
-			list=(List<SilverCustomer>)session.createNativeQuery("select * from silverCustomers").getResultList();
+			list=(List<SilverCustomer>)session.createQuery("select * from silverCustomers", SilverCustomer.class)
+				.list();
 			tx.commit();
 			session.close();
 			return list;
@@ -139,7 +122,7 @@ public class SilverCustomer_Dao_Impl implements SilverCustomer_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			session.createNativeQuery("delete from silverCustomers");
+			session.createQuery("delete from silverCustomers", SilverCustomer.class).executeUpdate();
 			tx.commit();
 			session.close();
 		} catch (Exception e) {

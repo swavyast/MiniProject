@@ -20,7 +20,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			Book b1 = new Book(b.getBookName(), b.getCost(), b.getEdition(), b.getVolume(), b.getPubYear(), b.getStatus(), b.getMyAuthors(), b.getMyOrderItems());
+			Book b1 = new Book(b.getBookName(), b.getCost(), b.getEdition(), b.getVolume(), b.getPubYear(), b.getStatus());
 			session.save(b1);
 			tx.commit();
 			session.close();
@@ -39,15 +39,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			Book b1 = session.load(Book.class, b.getBookId());
-			b1.setBookId(b.getBookId());
-			b1.setBookName(b.getBookName());
-			b1.setCost(b.getCost());
-			b1.setEdition(b.getEdition());
-			b1.setMyAuthors(b.getMyAuthors());
-			b1.setMyOrders(b.getMyOrders());
-			b1.setPubYear(b.getPubYear());
-			b1.setVolume(b.getVolume());
+			Book b1 = new Book(b.getBookName(), b.getCost(), b.getEdition(), b.getVolume(), b.getPubYear(), b.getStatus(), b.getMyAuthors(), b.getMyOrderItems());
 			session.update(b1);
 			tx.commit();
 			session.close();
@@ -68,6 +60,17 @@ public class Book_Dao_Impl implements Book_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			Book b1=session.load(Book.class, bookId);
+			Book b=new Book();
+			b.setBookId(bookId);
+			b.setBookName(b1.getBookName());
+			b.setCost(b1.getCost());
+			b.setEdition(b1.getEdition());
+			b.setMyAuthors(b1.getMyAuthors());
+			b.setMyOrderItems(b1.getMyOrderItems());
+			b.setMyOrders(b1.getMyOrders());
+			b.setPubYear(b1.getPubYear());
+			b.setStatus(b1.getStatus());
+			b.setVolume(b1.getVolume());
 			tx.commit();
 			session.close();
 			return b1;
@@ -86,7 +89,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<Book> list=new ArrayList<Book>();
-			list=(List<Book>)session.createNativeQuery("select * from books").getResultList();
+			list=(List<Book>)session.createQuery("select * from books", Book.class).list(); //.getResultList();
 			tx.commit();
 			session.close();
 			return list;
@@ -123,7 +126,7 @@ public class Book_Dao_Impl implements Book_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			session.createNativeQuery("delete from books");
+			session.createQuery("delete from books", Book.class).executeUpdate();
 			tx.commit();
 			session.close();
 		} catch (Exception e) {

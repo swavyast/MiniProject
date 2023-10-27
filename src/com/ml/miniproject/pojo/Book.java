@@ -2,8 +2,10 @@ package com.ml.miniproject.pojo;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,12 +35,12 @@ public class Book {
 	@Column(name = "bStatus")
 	private String status;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "books_and_authors", joinColumns = @JoinColumn(name = "myBookId", referencedColumnName = "bookId"), 
 	inverseJoinColumns = @JoinColumn(name = "myAuthorId", referencedColumnName = "authorId"))
 	Set<Author> myAuthors;
 
-	@OneToMany(mappedBy = "myBook")
+	@OneToMany(mappedBy = "myBook", fetch = FetchType.EAGER)
 	private Set<OrderItem> myOrderItems;
 
 	public Book() {

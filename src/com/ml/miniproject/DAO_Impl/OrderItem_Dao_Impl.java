@@ -20,13 +20,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			OrderItem item = new OrderItem();
-			item.setItemId(oi.getItemId());
-			item.setMyBook(oi.getMyBook());
-			item.setOrder(oi.getOrder());
-			item.setItemCount(oi.getItemCount());
-			item.setItemCost(oi.getItemCost());
-			item.setStatus(oi.getStatus());
+			OrderItem item = new OrderItem(oi.getItemCost(), oi.getItemCount(),  oi.getStatus());
 			session.save(item);
 			tx.commit();
 			session.close();
@@ -46,13 +40,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			OrderItem item = session.load(OrderItem.class, oi.getItemId());
-			item.setItemId(oi.getItemId());
-			item.setMyBook(oi.getMyBook());
-			item.setOrder(oi.getOrder());
-			item.setItemCount(oi.getItemCount());
-			item.setItemCost(oi.getItemCost());
-			item.setStatus(oi.getStatus());
+			OrderItem item = new OrderItem(oi.getItemCost(), oi.getItemCount(),  oi.getStatus(),  oi.getMyBook());
 			session.update(item);
 			tx.commit();
 			session.close();
@@ -92,7 +80,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
-			session.createNativeQuery("delete from orderItems");
+			session.createQuery("delete from orderItems", OrderItem.class).executeUpdate();
 			tx.commit();
 			session.close();
 		} catch (Exception e) {
@@ -110,12 +98,6 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			OrderItem item=session.load(OrderItem.class, orderId);
-			item.getItemId();
-			item.getMyBook();
-			item.getOrder();
-			item.getItemCount();
-			item.getItemCost();
-			item.getStatus();
 			tx.commit();
 			session.close();
 			return item;
@@ -134,7 +116,7 @@ public class OrderItem_Dao_Impl implements OrderItem_Dao {
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 			List<OrderItem> list=new ArrayList<OrderItem>();
-			list=(List<OrderItem>)session.createNativeQuery("select * from orderItems").getResultList();
+			list=(List<OrderItem>)session.createQuery("select * from orderItems", OrderItem.class).list();
 			tx.commit();
 			session.close();
 			return list;
