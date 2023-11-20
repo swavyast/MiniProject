@@ -3,13 +3,13 @@ package com.ml.miniproject.pojo;
 import java.util.*;
 import org.hibernate.*;
 
-import com.ml.miniproject.config.HibernateUtil;
+import com.ml.miniproject.config.HibernateUtil1;
 
 public class Lab20A {
 	public static void main(String[] args) {
 		Transaction tx = null;
 		try {
-			SessionFactory sf = HibernateUtil.getSessionFactory();
+			SessionFactory sf = HibernateUtil1.getSessionFactory();
 			Session session = sf.openSession();
 			tx = session.beginTransaction();
 
