@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.ml.miniproject.clientCode"},{"l":"com.ml.miniproject.config"},{"l":"com.ml.miniproject.DAO"},{"l":"com.ml.miniproject.DAO_Impl"},{"l":"com.ml.miniproject.pojo"}];updateSearchResults();
