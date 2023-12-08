@@ -1,103 +1,98 @@
 package com.ml.miniproject.pojo;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
 
 @Entity
-@Table(name="orderItems")
+@Table(name="myOrders")
 public class OrderItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "oiId")
+	@Column(name = "itemId")
 	private long itemId;
-	//@Formula("itemCost=cost")
-	@Column(name = "oiCost")
+	@OneToMany
+	@JoinColumn(name = "myBooks", referencedColumnName = "bookId")
+	private List<Books> myBook;
+	@Formula("itemCost=cost")
+	@Column(nullable = true)
 	private double itemCost;
-	@Column(name = "oiCount")
+	@Column(nullable = true)
 	private short itemCount;
-	@Column(name = "oiStatus")
-	private String status;
+	@Column(nullable = true)
+	private double shippingCost;
+	@Formula("itemCost*itemCount+shippingCost")
+	@Column(nullable = true)
+	private double totalCost;
 	@ManyToOne
-	@JoinColumn(name = "myBookId", referencedColumnName = "bookId")
-	private Book myBook;
-	@ManyToOne
-	@JoinColumn(name="myOrderId", referencedColumnName = "orderId")
+	@JoinColumn(name="myOid", referencedColumnName = "orderId")
 	private Order order;
 	public OrderItem() {}
-
-	public OrderItem(double itemCost, short itemCount, String status) {
-		this.itemCost = itemCost;
-		this.itemCount = itemCount;
-		this.status = status;
-	}
-
-	public OrderItem(double itemCost, short itemCount, String status, Book myBook) {
-		this.itemCost = itemCost;
-		this.itemCount = itemCount;
-		this.status = status;
+	public OrderItem(List<Books> myBook, double itemCost, short itemCount, double shippingCost, double totalCost,
+			Order order) {
+		super();
 		this.myBook = myBook;
+		this.itemCost = itemCost;
+		this.itemCount = itemCount;
+		this.shippingCost = shippingCost;
+		this.totalCost = totalCost;
+		this.order = order;
 	}
-
 	public long getItemId() {
 		return itemId;
 	}
-
 	public void setItemId(long itemId) {
 		this.itemId = itemId;
 	}
-
+	public List<Books> getMyBook() {
+		return myBook;
+	}
+	public void setMyBook(List<Books> myBook) {
+		this.myBook = myBook;
+	}
 	public double getItemCost() {
 		return itemCost;
 	}
-
 	public void setItemCost(double itemCost) {
 		this.itemCost = itemCost;
 	}
-
 	public short getItemCount() {
 		return itemCount;
 	}
-
 	public void setItemCount(short itemCount) {
 		this.itemCount = itemCount;
 	}
-
-	public String getStatus() {
-		return status;
+	public double getShippingCost() {
+		return shippingCost;
 	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setShippingCost(double shippingCost) {
+		this.shippingCost = shippingCost;
 	}
-
-	public Book getMyBook() {
-		return myBook;
+	public double getTotalCost() {
+		return totalCost;
 	}
-
-	public void setMyBook(Book myBook) {
-		this.myBook = myBook;
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
 	}
-
 	public Order getOrder() {
 		return order;
 	}
-
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-
 	@Override
 	public String toString() {
-		return "OrderItem [itemId=" + itemId + ", itemCost=" + itemCost + ", itemCount=" + itemCount + ", status="
-				+ status + ", myBook=" + myBook + ", order=" + order + "]";
+		return "OrderItem [itemId=" + itemId + ", myBook=" + myBook + ", itemCost=" + itemCost + ", itemCount="
+				+ itemCount + ", shippingCost=" + shippingCost + ", totalCost=" + totalCost + ", order=" + order + "]";
 	}
 }

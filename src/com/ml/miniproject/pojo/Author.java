@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,50 +21,43 @@ import javax.persistence.Table;
 @Table(name = "authors")
 public class Author {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="authorId")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(length = 20, unique = true, updatable = false, nullable = false)
 	private long authorId;
-	@Column(name="authorName")
+	
+	@Column(length = 50, updatable = true, nullable = false)
 	private String authorName;
-	@Column(name="authorEmail")
+	
+	@Column(length = 60, updatable = false, nullable = false)
 	private String email;
-	@Column(name="authorPhone")
+	
+	@Column(length = 14, updatable = true, nullable = false)
 	private long phone;
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "authorSkills", joinColumns = @JoinColumn(name = "authorId"))
+	
+	@ElementCollection
+	@CollectionTable(name = "mySkills", joinColumns = @JoinColumn(name="authorId"))
+	@Column(nullable = false, unique = false, updatable = true)
 	private Set<String> skills;
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "authorQual", joinColumns = @JoinColumn(name = "authorId"))
-	@OrderColumn(name = "qOrder")
-	@Column(name = "qualis")
-	private List<String> qualifications;
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "authorExp", joinColumns = @JoinColumn(name = "authorId"))
-	@MapKeyColumn(name = "companyName")
-	@Column(name = "yoe")
+	
+	@ElementCollection
+	@CollectionTable(name="myQualifications", joinColumns = @JoinColumn(name="authorId"))
+	@OrderColumn(name="qOrder")
+	@Column(nullable = false, unique = false, updatable = true)
+	private List qualifications;
+	
+	@ElementCollection
+	@CollectionTable(name = "myExperiences", joinColumns = @JoinColumn(name="authorId"))
+	@MapKeyColumn(name="companyName")
+	@Column(name="yoe",nullable = true, unique = false, updatable = true)
 	private Map<String, Integer> myExp;
+	
+	@ManyToMany(mappedBy = "myAuthors")
+	private Set<Books> myBooks;
+	
+	public Author() {}
 
-	@ManyToMany(mappedBy = "myAuthors", fetch = FetchType.EAGER)
-	private Set<Book> myBooks;
-
-	public Author() {
-	}
-
-	public Author(String authorName, String email, long phone, Set<String> skills, List<String> qualifications,
-			Map<String, Integer> myExp) {
-		this.authorName = authorName;
-		this.email = email;
-		this.phone = phone;
-		this.skills = skills;
-		this.qualifications = qualifications;
-		this.myExp = myExp;
-	}
-
-	public Author(String authorName, String email, long phone, Set<String> skills, List<String> qualifications,
-			Map<String, Integer> myExp, Set<Book> myBooks) {
+	public Author(String authorName, String email, long phone, Set<String> skills, List qualifications,
+			Map<String, Integer> myExp, Set<Books> myBooks) {
 		super();
 		this.authorName = authorName;
 		this.email = email;
@@ -117,11 +108,11 @@ public class Author {
 		this.skills = skills;
 	}
 
-	public List<String> getQualifications() {
+	public List getQualifications() {
 		return qualifications;
 	}
 
-	public void setQualifications(List<String> qualifications) {
+	public void setQualifications(List qualifications) {
 		this.qualifications = qualifications;
 	}
 
@@ -133,11 +124,11 @@ public class Author {
 		this.myExp = myExp;
 	}
 
-	public Set<Book> getMyBooks() {
+	public Set<Books> getMyBooks() {
 		return myBooks;
 	}
 
-	public void setMyBooks(Set<Book> myBooks) {
+	public void setMyBooks(Set<Books> myBooks) {
 		this.myBooks = myBooks;
 	}
 

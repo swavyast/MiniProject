@@ -1,34 +1,18 @@
 package com.ml.miniproject.pojo;
 
-import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="goldCustomers")
-@PrimaryKeyJoinColumn(name = "mycid")
+@PrimaryKeyJoinColumn(name = "mycid", referencedColumnName = "cid")
 public class GoldCustomer extends Customer {
-	@Column(name = "supportPhone")
 	private long supportPhone;
-	@Column(name = "rPoints")
 	private int rpoints;
-	@Column(name = "cashBacks")
 	private double cashback;
-	@Column(name = "earlyAccess")
 	private boolean earlyAccess;
 	public GoldCustomer() {}
-
-	public GoldCustomer(String cname, String email, long phone, Date dob, long supportPhone, int rpoints,
-			double cashback, boolean earlyAccess) {
-		super(cname, email, phone, dob);
-		this.supportPhone = supportPhone;
-		this.rpoints = rpoints;
-		this.cashback = cashback;
-		this.earlyAccess = earlyAccess;
-	}
-
 	public GoldCustomer(long supportPhone, int rpoints, double cashback, boolean earlyAccess) {
 		super();
 		this.supportPhone = supportPhone;

@@ -1,7 +1,7 @@
 package com.ml.miniproject.DAO_Impl;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,131 +11,38 @@ import com.ml.miniproject.config.HibernateUtil;
 import com.ml.miniproject.pojo.Author;
 
 public class Author_Dao_Impl implements Author_Dao {
-	
+	SessionFactory sf=HibernateUtil.getSessionFactory();
+	Session session=sf.openSession();
+	Transaction tx=null;
 	@Override
-	public void saveAuthor(Author ath) {
-		Transaction tx = null;
-		try  /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			Author a=new Author(ath.getAuthorName(), ath.getEmail(), ath.getPhone(), ath.getSkills(), ath.getQualifications(), ath.getMyExp(), ath.getMyBooks());
-			session.save(a);
-			tx.commit();
-			session.close();
-		} catch (Exception e) {
-			System.out.println("Exception Occured While Saving Author's Records");
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-		}
+	public Author getAuthorById(long aid) {
+		tx=session.beginTransaction();
+		Author auth=session.get(Author.class, aid);
+		return auth;
 	}
 
 	@Override
-	public void upateAuthor(Author ath) {
-		Transaction tx = null;
-		try  /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			Author a=new Author(ath.getAuthorName(), ath.getEmail(), ath.getPhone(), ath.getSkills(), ath.getQualifications(), ath.getMyExp(), ath.getMyBooks());
-			session.update(a);
-			tx.commit();
-			session.close();
-		} catch (Exception e) {
-			System.out.println("Exception Occured Updating Author's Records");
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-		}
-
+	public List<Author> listAuthors() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void deleteAuthor(long aid) {
-		Transaction tx = null;
-		try  /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			Author a=session.load(Author.class, aid);
-			session.delete(a);
-			tx.commit();
-			session.close();
-		} catch (Exception e) {
-			System.out.println("Exception Occured Deleting Author by Author-Id");
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-		}
-
-	}
-
-	@Override
-	public void deleteAll() {
-		Transaction tx = null;
-		try  /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			session.createQuery("delete from authors", Author.class).executeUpdate();
-			tx.commit();
-			session.close();
-		} catch (Exception e) {
-			System.out.println("Exception occured while deleting author entries from the database");
-			e.printStackTrace();
-		}
+	public void saveAuthor() {
+		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public Author fetchAuthor(long aid) {
 
-		Transaction tx = null;
-		try  /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			Author auth = session.load(Author.class, aid);
-			Author a=new Author();
-			a.setAuthorId(aid);
-			a.setAuthorName(auth.getAuthorName());
-			a.setEmail(auth.getEmail());
-			a.setMyBooks(auth.getMyBooks());
-			a.setMyExp(auth.getMyExp());
-			a.setPhone(auth.getPhone());
-			a.setQualifications(auth.getQualifications());
-			a.setSkills(auth.getSkills());
-			tx.commit();
-			session.close();
-			return auth;
-		} catch (Exception e) {
-			System.out.println("Exception Ocuured Fetching Author by Author-Id");
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-			return null;
-		}
+	@Override
+	public void upateAuthor() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public List<Author> listAuthors(long aid) {
-
-		Transaction tx = null;
-		try /*(Session session=HibernateUtil.getSessionFactory().openSession())*/{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session session = sf.openSession();
-			tx = session.beginTransaction();
-			List<Author> listOfAuthors = new ArrayList<Author>();
-			listOfAuthors=session.createQuery("from authors", Author.class).list();
-			tx.commit();
-			session.close();
-			return listOfAuthors;
-		} catch (Exception e) {
-			System.out.println("Exception Ocuured Fetching List of Authors");
-			e.printStackTrace();
-			if (tx != null)
-				tx.rollback();
-			return null;
-		}
+	public void deleteAuthor() {
+		// TODO Auto-generated method stub
+		
 	}
+	
 }

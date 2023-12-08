@@ -2,10 +2,8 @@ package com.ml.miniproject.pojo;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,10 +15,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "books")
-public class Book {
+public class Books {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "bookId")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long bookId;
 	@Column(name = "bName")
 	private String bookName;
@@ -32,31 +29,19 @@ public class Book {
 	private float volume;
 	@Column(name = "bPubYear")
 	private int pubYear;
-	@Column(name = "bStatus")
+	@Column(updatable = true, length = 50)
 	private String status;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "books_and_authors", joinColumns = @JoinColumn(name = "myBookId", referencedColumnName = "bookId"), 
-	inverseJoinColumns = @JoinColumn(name = "myAuthorId", referencedColumnName = "authorId"))
+	@ManyToMany
+	@JoinTable(name = "books_and_authors", joinColumns = @JoinColumn(name = "myBookId", referencedColumnName = "bookId"), inverseJoinColumns = @JoinColumn(name = "myAuthorId", referencedColumnName = "authorId"))
 	Set<Author> myAuthors;
 
-	@OneToMany(mappedBy = "myBook", fetch = FetchType.EAGER)
-	private Set<OrderItem> myOrderItems;
+	@OneToMany(mappedBy = "myBook")
+	private Set<OrderItem> myOrders;
 
-	public Book() {
+	public Books() {
 	}
-	
-	public Book(String bookName, double cost, int edition, float volume, int pubYear, String status) {
-		super();
-		this.bookName = bookName;
-		this.cost = cost;
-		this.edition = edition;
-		this.volume = volume;
-		this.pubYear = pubYear;
-		this.status = status;
-	}
-
-	public Book(String bookName, double cost, int edition, float volume, int pubYear, String status,
+	public Books(String bookName, double cost, int edition, float volume, int pubYear, String status,
 			Set<Author> myAuthors, Set<OrderItem> myOrders) {
 		super();
 		this.bookName = bookName;
@@ -66,7 +51,7 @@ public class Book {
 		this.pubYear = pubYear;
 		this.status = status;
 		this.myAuthors = myAuthors;
-		this.myOrderItems = myOrders;
+		this.myOrders = myOrders;
 	}
 	public long getBookId() {
 		return bookId;
@@ -116,22 +101,6 @@ public class Book {
 		this.pubYear = pubYear;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Set<OrderItem> getMyOrderItems() {
-		return myOrderItems;
-	}
-
-	public void setMyOrderItems(Set<OrderItem> myOrderItems) {
-		this.myOrderItems = myOrderItems;
-	}
-
 	public Set<Author> getMyAuthors() {
 		return myAuthors;
 	}
@@ -141,17 +110,17 @@ public class Book {
 	}
 
 	public Set<OrderItem> getMyOrders() {
-		return myOrderItems;
+		return myOrders;
 	}
 
 	public void setMyOrders(Set<OrderItem> myOrders) {
-		this.myOrderItems = myOrders;
+		this.myOrders = myOrders;
 	}
 
 	@Override
 	public String toString() {
 		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", cost=" + cost + ", edition=" + edition
-				+ ", volume=" + volume + ", pubYear=" + pubYear + ", myAuthors=" + myAuthors + ", myOrders=" + myOrderItems
+				+ ", volume=" + volume + ", pubYear=" + pubYear + ", myAuthors=" + myAuthors + ", myOrders=" + myOrders
 				+ "]";
 	}
 }
